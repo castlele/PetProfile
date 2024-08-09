@@ -6,7 +6,7 @@
 
 class Activity {
     name: String,
-    repeateEvery: number of { DAY, WEEK, MONTH, YEAR }
+    repeatEvery: number of { DAY, WEEK, MONTH, YEAR }
     end: { Date, Times }
 }
 
