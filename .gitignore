@@ -4,6 +4,9 @@ TODO.*
 # IDEs
 .idea
 
+# Kotlin Language Server
+kls_database.db
+
 # Ignore Gradle project-specific cache directory
 .gradle
 

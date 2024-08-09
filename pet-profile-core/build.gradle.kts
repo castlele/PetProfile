@@ -25,6 +25,12 @@ kotlin {
 
     sourceSets {
         val commonMain by getting
+
+        commonTest {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
+        }
     }
 }
 
