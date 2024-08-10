@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">PetProfile</string>
+  <string name="empty_pets_list">There is no pets in your list. Click + button to add one.</string>
+</resources>

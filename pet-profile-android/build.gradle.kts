@@ -40,7 +40,7 @@ android {
 
 dependencies {
     // Kmp
-    // implementation(project(":rec"))
+     implementation(project(":pet-profile-core"))
 
     // Android UI
     implementation(libs.compose.ui)
