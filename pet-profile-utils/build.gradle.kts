@@ -4,15 +4,8 @@ plugins {
 }
 
 kotlin {
-    listOf(
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach {
-        it.binaries.framework {
-            baseName = "PetProfileCore"
-            isStatic = true
-        }
-    }
+    iosArm64()
+    iosSimulatorArm64()
 
     androidTarget {
         compilations.all {
@@ -23,11 +16,7 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                implementation(project(":pet-profile-utils"))
-            }
-        }
+        val commonMain by getting
 
         commonTest {
             dependencies {
@@ -38,7 +27,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.castlelecs.petprofile"
+    namespace = "com.castlelecs.utils"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
