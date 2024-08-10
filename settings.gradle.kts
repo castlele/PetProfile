@@ -1,6 +1,8 @@
 include(":pet-profile-utils")
 include(":pet-profile-core")
 
+include(":pet-profile-android")
+
 rootProject.name = "PetProfile"
 
 pluginManagement {
