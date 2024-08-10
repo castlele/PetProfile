@@ -16,7 +16,9 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        commonMain
+        androidMain
+        iosMain
 
         commonTest {
             dependencies {
