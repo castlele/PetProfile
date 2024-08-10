@@ -12,3 +12,6 @@ kls_database.db
 
 # Ignore Gradle build output directory
 build
+
+# Java
+java_pid*

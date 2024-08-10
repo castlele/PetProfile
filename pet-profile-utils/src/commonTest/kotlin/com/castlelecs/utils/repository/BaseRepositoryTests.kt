@@ -1,4 +1,4 @@
-package com.castlelecs.petprofile.repository
+package com.castlelecs.utils.repository
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

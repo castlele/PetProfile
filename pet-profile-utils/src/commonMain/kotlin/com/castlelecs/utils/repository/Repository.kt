@@ -1,4 +1,4 @@
-package com.castlelecs.petprofile.repository
+package com.castlelecs.utils.repository
 
 interface Repository<K, E> {
     fun get(key: K): E?

@@ -1,6 +1,6 @@
-package com.castlelecs.petprofile.repository
+package com.castlelecs.utils.repository
 
-class BaseRepository<K, E>(
+open class BaseRepository<K, E>(
     private val storage: MutableMap<K, E>
 ) : Repository<K, E> {
 
