@@ -12,21 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.castlelecs.petprofile.android.R
-import com.castlelecs.petprofile.android.views.NavigationViewModel
-import com.castlelecs.petprofile.interactors.PetsInteractorImpl
 import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
-import com.castlelecs.petprofile.repository.PetsRepository
 import java.util.UUID
 
 @Composable
-fun PetsListScreen(viewModel: PetsListViewModel) {
+fun PetsListView(
+    pets: List<Pet>,
+    modifier: Modifier = Modifier,
+) {
     val scrollState = remember { ScrollState(0) }
-    val pets = viewModel.pets
 
     Column(
-        modifier = Modifier
-            .verticalScroll(scrollState),
+        modifier = modifier
+            .verticalScroll(scrollState)
     ) {
         if (pets.isEmpty()) {
             Text(
@@ -57,7 +56,5 @@ private fun PetsListScreenPreview() {
         pets[id] = Pet(id = id, name = it.toString())
     }
 
-    PetListScreenAssembler.Assemble(
-        NavigationViewModel(PetsInteractorImpl(PetsRepository(pets)))
-    )
+    PetsListView(pets = pets.values.toList())
 }

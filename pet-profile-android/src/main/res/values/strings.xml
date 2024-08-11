@@ -2,4 +2,5 @@
 <resources>
   <string name="app_name">PetProfile</string>
   <string name="empty_pets_list">There is no pets in your list. Click + button to add one.</string>
+  <string name="profile_creation">Create Pet\'s Profile</string>
 </resources>
