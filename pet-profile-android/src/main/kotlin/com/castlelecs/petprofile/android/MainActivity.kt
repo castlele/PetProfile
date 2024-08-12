@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
 import com.castlelecs.petprofile.android.screens.PetsViewModel
+import com.castlelecs.petprofile.android.interactors.PetsInteractorDecorator
 import com.castlelecs.petprofile.interactors.PetsInteractorImpl
 import com.castlelecs.petprofile.repository.PetsRepository
 
@@ -19,7 +20,9 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
                 Surface {
                     AppView(
-                        viewModel = PetsViewModel(petsInteractor)
+                        viewModel = PetsViewModel(
+                            PetsInteractorDecorator(petsInteractor)
+                        )
                     )
                 }
             }

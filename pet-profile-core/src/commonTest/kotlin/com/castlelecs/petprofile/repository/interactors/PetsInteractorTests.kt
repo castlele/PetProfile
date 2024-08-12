@@ -14,7 +14,7 @@ class PetsInteractorTests {
         val repository = createPetsRepository()
         val sut = createPetsInteractor(repository)
 
-        val pet = sut.createPet()
+        val pet = sut.createPetAndSaveImmediately()
 
         assertEquals(repository.get(pet.id), pet)
     }
@@ -68,6 +68,21 @@ class PetsInteractorTests {
         assertListsOfPetsEqual(pets, listOfPets)
     }
 
+    @Test
+    fun `Interactor should override pet if it was saved earlier`() {
+        val pet = createPet()
+        val repository = createPetsRepository(pet)
+        val updatedPet = pet.copy(name = "Shanty")
+        val sut = createPetsInteractor(repository)
+
+        sut.savePet(updatedPet)
+
+        // After `updatedPet` was saved,
+        // the amount of pets in the repo should stay the same
+        assertEquals(1, sut.getAllPets().count())
+        assertEquals(updatedPet, sut.getPet(pet.id))
+    }
+
     private fun createPetsInteractor(repository: PetsRepository): PetsInteractor {
         return PetsInteractorImpl(repository)
     }
@@ -85,6 +100,10 @@ class PetsInteractorTests {
             id = generateUUIDString(),
             name = name,
         )
+    }
+
+    private fun PetsInteractor.createPetAndSaveImmediately(): Pet {
+        return createPet().also { savePet(it) }
     }
 
     private fun assertListsOfPetsEqual(expected: List<Pet>, actual: List<Pet>) {

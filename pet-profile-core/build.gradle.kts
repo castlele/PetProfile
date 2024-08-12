@@ -11,6 +11,8 @@ kotlin {
         it.binaries.framework {
             baseName = "PetProfileCore"
             isStatic = true
+
+            export(project(":pet-profile-utils"))
         }
     }
 
@@ -25,7 +27,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":pet-profile-utils"))
+                api(project(":pet-profile-utils"))
             }
         }
 

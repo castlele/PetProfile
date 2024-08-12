@@ -54,7 +54,21 @@ class BaseRepositoryTests {
         assertTrue(sut.getAll().isEmpty())
     }
 
-    private fun getRepository(): Repository<String, String> {
-        return BaseRepository(mutableMapOf())
+    @Test
+    fun `Set new value with the same key will override value`() {
+        val value = "Value"
+        val key = "Key"
+        val updatedValue = "New Value"
+        val sut = getRepository(value to key)
+
+        sut.set(key, updatedValue)
+
+        assertEquals(updatedValue, sut.get(key))
+    }
+
+    private fun getRepository(
+        vararg initialValues: Pair<String, String>,
+    ): Repository<String, String> {
+        return BaseRepository(mutableMapOf(*initialValues))
     }
 }

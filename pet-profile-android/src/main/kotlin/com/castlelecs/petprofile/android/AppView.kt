@@ -26,7 +26,7 @@ import com.castlelecs.petprofile.android.screens.PetsViewModel
 import com.castlelecs.petprofile.android.screens.Screen
 import com.castlelecs.petprofile.android.screens.petlist.PetsListView
 import com.castlelecs.petprofile.android.screens.profile.ProfileView
-import com.castlelecs.petprofile.android.screens.profile.ProfileViewState
+import com.castlelecs.petprofile.android.screens.profile.ProfileViewMode
 import com.castlelecs.petprofile.android.views.TopBarView
 
 @Composable
@@ -34,7 +34,7 @@ fun AppView(
     viewModel: PetsViewModel,
     navController: NavHostController = rememberNavController(),
 ) {
-    val state = viewModel.state.collectAsState().value
+    // val state = viewModel.state.collectAsState().value
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     val isNavigationBackEnabled = navController.previousBackStackEntry != null
@@ -86,8 +86,13 @@ fun AppView(
             }
 
             composable(Screen.CREATE_PROFILE.route) {
+                val profileViewModel = viewModel.createProfileViewModelWithMode(
+                    mode = ProfileViewMode.CREATING
+                )
+
                 ProfileView(
-                    state = ProfileViewState.CREATING,
+                    viewModel = profileViewModel,
+                    onSaveProfile = navController::popBackStack,
                     modifier = Modifier.fillMaxSize()
                 )
             }
