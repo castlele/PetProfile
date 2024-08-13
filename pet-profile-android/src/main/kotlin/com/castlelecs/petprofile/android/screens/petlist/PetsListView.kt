@@ -1,6 +1,7 @@
 package com.castlelecs.petprofile.android.screens.petlist
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
@@ -19,6 +20,7 @@ import java.util.UUID
 @Composable
 fun PetsListView(
     pets: List<Pet>,
+    onPetClicked: (Pet) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = remember { ScrollState(0) }
@@ -34,11 +36,11 @@ fun PetsListView(
         }
 
         pets.forEach { pet ->
-            // TODO: Move to a separate view
             ListItem(
                 headlineContent = {
                     Text(pet.name)
                 },
+                modifier = Modifier.clickable { onPetClicked(pet) }
             )
 
             Divider()
@@ -56,5 +58,8 @@ private fun PetsListScreenPreview() {
         pets[id] = Pet(id = id, name = it.toString())
     }
 
-    PetsListView(pets = pets.values.toList())
+    PetsListView(
+        pets = pets.values.toList(),
+        onPetClicked = {},
+    )
 }

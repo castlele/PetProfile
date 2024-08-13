@@ -26,7 +26,6 @@ import com.castlelecs.petprofile.android.screens.PetsViewModel
 import com.castlelecs.petprofile.android.screens.Screen
 import com.castlelecs.petprofile.android.screens.petlist.PetsListView
 import com.castlelecs.petprofile.android.screens.profile.ProfileView
-import com.castlelecs.petprofile.android.screens.profile.ProfileViewMode
 import com.castlelecs.petprofile.android.views.TopBarView
 
 @Composable
@@ -34,7 +33,7 @@ fun AppView(
     viewModel: PetsViewModel,
     navController: NavHostController = rememberNavController(),
 ) {
-    // val state = viewModel.state.collectAsState().value
+    val state = viewModel.state.collectAsState().value
     val backStackEntry by navController.currentBackStackEntryAsState()
 
     val isNavigationBackEnabled = navController.previousBackStackEntry != null
@@ -47,17 +46,19 @@ fun AppView(
             TopBarView(
                 currentScreen = currentScreen,
                 isNavigationBackEnabled = isNavigationBackEnabled,
-                onBackButtonClicked = navController::navigateUp
+                onBackButtonClicked = {
+                    viewModel.onBackToPetsList()
+                    navController.navigateUp()
+                },
+                onEditButtonClicked = viewModel::onEditPetsProfile,
             )
         },
         floatingActionButton = {
-            if (viewModel.isFloatingButtonEnabled(currentScreen)) {
-                // TODO: Move to separate view
+            if (state.isCreateProfileButtonHidden) {
                 FloatingActionButton(
                     onClick = {
-                        viewModel.floatingButtonPressed(currentScreen)?.let {
-                            navController.navigate(it.route)
-                        }
+                        viewModel.createNewPetProfile()
+                        navController.navigate(Screen.CREATE_PROFILE.route)
                     }
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
@@ -81,18 +82,35 @@ fun AppView(
             composable(Screen.PETS_LIST.route) {
                 PetsListView(
                     pets = viewModel.pets,
+                    onPetClicked = { pet ->
+                        viewModel.onPetClicked(pet)
+                        navController.navigate(Screen.PROFILE.route)
+                    },
                     modifier = Modifier.fillMaxSize()
                 )
             }
 
             composable(Screen.CREATE_PROFILE.route) {
-                val profileViewModel = viewModel.createProfileViewModelWithMode(
-                    mode = ProfileViewMode.CREATING
-                )
-
                 ProfileView(
-                    viewModel = profileViewModel,
-                    onSaveProfile = navController::popBackStack,
+                    state = state,
+                    onSaveProfile = {
+                        viewModel.saveProfile()
+                        viewModel.onBackToPetsList()
+                        navController.popBackStack()
+                    },
+                    onPetNameChanged = viewModel::onPetNameChanged,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            composable(Screen.PROFILE.route) {
+                ProfileView(
+                    state = state,
+                    onSaveProfile = {
+                        viewModel.saveProfile()
+                    },
+                    onPetNameChanged = viewModel::onPetNameChanged,
+                    onBackToViewingMode = viewModel::onBackToViewingMode,
                     modifier = Modifier.fillMaxSize()
                 )
             }

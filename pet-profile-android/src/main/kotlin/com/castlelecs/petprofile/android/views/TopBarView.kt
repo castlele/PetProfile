@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import com.castlelecs.petprofile.android.screens.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,6 +19,7 @@ fun TopBarView(
     currentScreen: Screen,
     isNavigationBackEnabled: Boolean,
     onBackButtonClicked: () -> Unit,
+    onEditButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -29,6 +31,16 @@ fun TopBarView(
                 IconButton(onClick = onBackButtonClicked) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = null)
                 }
+            }
+        },
+        actions = {
+            when (currentScreen) {
+                Screen.PROFILE -> {
+                    IconButton(onClick = onEditButtonClicked) {
+                        Icon(Icons.Filled.Edit, contentDescription = null)
+                    }
+                }
+                else -> {}
             }
         },
         modifier = modifier,

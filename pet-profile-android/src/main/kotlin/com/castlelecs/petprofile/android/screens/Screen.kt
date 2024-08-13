@@ -5,6 +5,7 @@ import com.castlelecs.petprofile.android.R
 
 enum class Screen(@StringRes val topBarTitle: Int) {
     PETS_LIST(R.string.app_name),
+    PROFILE(R.string.profile),
     CREATE_PROFILE(R.string.profile_creation);
 
     val route: String = name
