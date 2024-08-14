@@ -2,11 +2,12 @@ package com.castlelecs.petprofile.android.interactors
 
 import com.castlelecs.petprofile.interactors.PetsInteractor
 import com.castlelecs.petprofile.interactors.PetsInteractorImpl
+import com.castlelecs.petprofile.models.Activity
 import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.petprofile.repository.PetsRepository
-import com.castlelecs.utils.logger.compositeLogger
 import com.castlelecs.utils.logger.LogLevel
+import com.castlelecs.utils.logger.compositeLogger
 
 class PetsInteractorDecorator(
      private val petsInteractor: PetsInteractor,
@@ -57,6 +58,14 @@ class PetsInteractorDecorator(
 
     override fun removePet(pet: Pet) {
         petsInteractor.removePet(pet)
+    }
+
+    override fun createActivity(name: String): Activity {
+        return petsInteractor.createActivity(name)
+    }
+
+    override fun saveActivityForPet(pet: Pet, activity: Activity) {
+        return petsInteractor.saveActivityForPet(pet, activity)
     }
 
     companion object {

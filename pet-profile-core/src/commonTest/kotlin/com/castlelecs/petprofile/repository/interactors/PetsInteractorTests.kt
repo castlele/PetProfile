@@ -6,6 +6,7 @@ import com.castlelecs.petprofile.repository.PetsRepository
 import com.castlelecs.utils.generateUUIDString
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class PetsInteractorTests {
@@ -65,7 +66,7 @@ class PetsInteractorTests {
 
         val listOfPets = sut.getAllPets()
 
-        assertListsOfPetsEqual(pets, listOfPets)
+        assertListsEquals(pets, listOfPets)
     }
 
     @Test
@@ -81,6 +82,20 @@ class PetsInteractorTests {
         // the amount of pets in the repo should stay the same
         assertEquals(1, sut.getAllPets().count())
         assertEquals(updatedPet, sut.getPet(pet.id))
+        assertEquals(pet.id, updatedPet.id)
+    }
+
+    @Test
+    fun `Interactor adds activity to the pet`() {
+        val pet = createPet()
+        val repository = createPetsRepository(pet)
+        val sut = createPetsInteractor(repository)
+        val activity = sut.createActivity(DEFAULT_ACTIVITY_NAME)
+
+        sut.saveActivityForPet(pet, activity)
+
+        assertFalse(sut.getPet(pet.id)!!.activities.isEmpty())
+        assertListsEquals(listOf(activity), sut.getPet(pet.id)!!.activities)
     }
 
     private fun createPetsInteractor(repository: PetsRepository): PetsInteractor {
@@ -106,7 +121,7 @@ class PetsInteractorTests {
         return createPet().also { savePet(it) }
     }
 
-    private fun assertListsOfPetsEqual(expected: List<Pet>, actual: List<Pet>) {
+    private fun <T> assertListsEquals(expected: List<T>, actual: List<T>) {
         assertEquals(expected.count(), actual.count())
 
         val mutableActual = actual.toMutableList()
@@ -122,6 +137,8 @@ class PetsInteractorTests {
         private const val DEFAULT_PET_NAME = "Javie"
         private const val DOG_NAME = "Shanty"
         private const val CAT_NAME = "Perry"
+
+        private const val DEFAULT_ACTIVITY_NAME = "New Activity"
     }
 }
 

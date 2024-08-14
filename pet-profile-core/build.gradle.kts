@@ -28,6 +28,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":pet-profile-utils"))
+                api(libs.kotlinx.datetime)
             }
         }
 

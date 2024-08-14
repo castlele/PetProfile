@@ -1,5 +1,6 @@
 package com.castlelecs.petprofile.interactors
 
+import com.castlelecs.petprofile.models.Activity
 import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.petprofile.repository.PetsRepository
@@ -34,5 +35,13 @@ class PetsInteractorImpl(
 
     override fun removePet(pet: Pet) {
         petsRepository.remove(pet.id)
+    }
+
+    override fun createActivity(name: String): Activity {
+        return Activity.EMPTY(name = name)
+    }
+
+    override fun saveActivityForPet(pet: Pet, activity: Activity) {
+        savePet(pet.copy(activities = pet.activities + activity))
     }
 }
