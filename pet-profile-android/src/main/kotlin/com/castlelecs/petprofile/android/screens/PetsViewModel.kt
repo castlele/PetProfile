@@ -4,6 +4,7 @@ import com.castlelecs.petprofile.android.helpers.BaseViewModel
 import com.castlelecs.petprofile.interactors.PetsInteractor
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.petprofile.android.screens.profile.ProfileViewMode
+import com.castlelecs.petprofile.models.Activity
 import com.castlelecs.utils.logger.LogLevel
 
 class PetsViewModel(
@@ -12,6 +13,7 @@ class PetsViewModel(
 
     data class State(
         val pet: Pet? = null,
+        val editingActivity: Activity? = null,
         val profileMode: ProfileViewMode? = null,
     ) {
         val isProfileInEditingMode: Boolean
@@ -65,7 +67,7 @@ class PetsViewModel(
         val pet = stateValue.pet
 
         mutableStateFlow.value = stateValue.copy(
-            pet = updatePetWithName(pet, newName),
+            pet = updatePet(pet, newName),
         )
     }
 
@@ -77,9 +79,56 @@ class PetsViewModel(
         }
     }
 
-    private fun updatePetWithName(pet: Pet?, name: String): Pet {
-        return if (pet == null) {
-            val createdPet = petsInteractor.createPet(name)
+    fun onActivityAdded() {
+        val activity = petsInteractor.createActivity("New Activity")
+
+        mutableStateFlow.value = stateValue.copy(
+            editingActivity = activity,
+        )
+    }
+
+    fun onActivityChanged(activity: Activity) {
+        mutableStateFlow.value = stateValue.copy(
+            editingActivity = activity,
+        )
+    }
+
+    fun onActivitySaved(activity: Activity) {
+        mutableStateFlow.value = stateValue.copy(
+            editingActivity = null,
+            pet = updatePet(
+                pet = stateValue.pet,
+                activity = activity,
+            ),
+        )
+    }
+
+    private fun updatePet(
+        pet: Pet?,
+        name: String? = null,
+        activity: Activity? = null,
+    ): Pet {
+        val localPet = wrapPet(pet)
+        val updatedPet = localPet.copy(
+            name = name ?: localPet.name,
+            activities = if (activity != null) {
+                localPet.activities + activity
+            } else {
+                localPet.activities
+            },
+        )
+
+        logger.log(
+            LogLevel.INFO,
+            PET_UPDATED_MESSAGE(updatedPet)
+        )
+
+        return updatedPet
+    }
+
+    private fun wrapPet(pet: Pet?): Pet {
+        return if ((pet) == null) {
+            val createdPet = petsInteractor.createPet()
 
             logger.log(
                 LogLevel.INFO,
@@ -89,14 +138,7 @@ class PetsViewModel(
             createdPet
 
         } else {
-            val updatedPet = pet.copy(name = name)
-
-            logger.log(
-                LogLevel.INFO,
-                PET_UPDATED_MESSAGE(updatedPet)
-            )
-
-            updatedPet
+            pet
         }
     }
 

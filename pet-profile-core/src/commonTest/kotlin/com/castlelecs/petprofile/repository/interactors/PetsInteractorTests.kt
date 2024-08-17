@@ -66,7 +66,7 @@ class PetsInteractorTests {
 
         val listOfPets = sut.getAllPets()
 
-        assertListsEquals(pets, listOfPets)
+        assertSequencesEquals(pets, listOfPets)
     }
 
     @Test
@@ -95,7 +95,7 @@ class PetsInteractorTests {
         sut.saveActivityForPet(pet, activity)
 
         assertFalse(sut.getPet(pet.id)!!.activities.isEmpty())
-        assertListsEquals(listOf(activity), sut.getPet(pet.id)!!.activities)
+        assertSequencesEquals(setOf(activity), sut.getPet(pet.id)!!.activities)
     }
 
     private fun createPetsInteractor(repository: PetsRepository): PetsInteractor {
@@ -121,7 +121,10 @@ class PetsInteractorTests {
         return createPet().also { savePet(it) }
     }
 
-    private fun <T> assertListsEquals(expected: List<T>, actual: List<T>) {
+    private fun <T: Collection<Any>> assertSequencesEquals(
+        expected: T,
+        actual: T,
+    ) {
         assertEquals(expected.count(), actual.count())
 
         val mutableActual = actual.toMutableList()

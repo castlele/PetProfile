@@ -99,6 +99,9 @@ fun AppView(
                         navController.popBackStack()
                     },
                     onPetNameChanged = viewModel::onPetNameChanged,
+                    onActivityAdded = viewModel::onActivityAdded,
+                    onActivityChanged = viewModel::onActivityChanged,
+                    onActivitySaved = viewModel::onActivitySaved,
                     modifier = Modifier.fillMaxSize()
                 )
             }
@@ -110,6 +113,9 @@ fun AppView(
                         viewModel.saveProfile()
                     },
                     onPetNameChanged = viewModel::onPetNameChanged,
+                    onActivityAdded = viewModel::onActivityAdded,
+                    onActivityChanged = viewModel::onActivityChanged,
+                    onActivitySaved = viewModel::onActivitySaved,
                     onBackToViewingMode = viewModel::onBackToViewingMode,
                     modifier = Modifier.fillMaxSize()
                 )
