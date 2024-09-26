@@ -1,0 +1,34 @@
+@startuml
+
+class OnboardingViewModel {
+    isFirstTime: Boolean
+    isOnboardingPassed: Boolean
+}
+
+class PetProfileViewModel {
+    fun changeFirstName(name: String)
+    fun changeLastName(name: String)
+    fun toggleCastration()
+    fun selectGender(gender: Gender)
+    fun pickDateOfBirth(date: Date?)
+    fun pickBreed(breed: Breed?)
+
+    fun save()
+    fun close()
+    fun discardCurrentState()
+}
+
+class ActivityViewModel {
+    fun changeName(name: String)
+    fun changeDescription(name: String)
+    fun setRemindDate(date: Date)
+    fun setRemindTime(time: Time?)
+    fun pickRepeateFrequency(frequency: Frequency)
+    fun pickEndOfRepeate(data: Date?)
+
+    fun save()
+    fun close()
+    fun discardCurrentState()
+}
+
+@enduml
