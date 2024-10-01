@@ -19,12 +19,6 @@ kotlin {
         commonMain
         androidMain
         iosMain
-
-        commonTest {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
-        }
     }
 }
 
