@@ -5,30 +5,53 @@ class OnboardingViewModel {
     isOnboardingPassed: Boolean
 }
 
-class PetProfileViewModel {
-    fun changeFirstName(name: String)
-    fun changeLastName(name: String)
-    fun toggleCastration()
-    fun selectGender(gender: Gender)
-    fun pickDateOfBirth(date: Date?)
-    fun pickBreed(breed: Breed?)
+package Profile {
 
-    fun save()
-    fun close()
-    fun discardCurrentState()
-}
+    interface PetsRepository {
+        getPet(id: UUID): Pet
+        getActivity(pet: Pet): Activity
+        saveActivity(pet: Pet, activity: Activity)
+        savePet(pet: Pet)
+    }
 
-class ActivityViewModel {
-    fun changeName(name: String)
-    fun changeDescription(name: String)
-    fun setRemindDate(date: Date)
-    fun setRemindTime(time: Time?)
-    fun pickRepeateFrequency(frequency: Frequency)
-    fun pickEndOfRepeate(data: Date?)
+    interface PetsInteractor {
+        petsRepository: PetsRepository
 
-    fun save()
-    fun close()
-    fun discardCurrentState()
+        save(pet: Pet)
+        saveActivity(activity: Activity, pet: Pet)
+        delete(pet: Pet)
+    }
+
+    class PetProfileViewModel {
+        petsInteractor: PetsInteractor
+
+        changeFirstName(name: String)
+        changeLastName(name: String)
+        toggleCastration()
+        selectGender(gender: Gender)
+        pickDateOfBirth(date: Date?)
+        pickBreed(breed: Breed?)
+
+        save()
+        close()
+        discardCurrentState()
+    }
+
+    class ActivityViewModel {
+        changeName(name: String)
+        changeDescription(name: String)
+        setRemindDate(date: Date)
+        setRemindTime(time: Time?)
+        pickRepeateFrequency(frequency: Frequency)
+        pickEndOfRepeate(data: Date?)
+
+        save()
+        close()
+        discardCurrentState()
+    }
+
+    PetProfileViewModel o-- PetsInteractor
+    PetsInteractor o-- PetsRepository
 }
 
 @enduml
