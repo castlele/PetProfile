@@ -5,6 +5,19 @@ class OnboardingViewModel {
     isOnboardingPassed: Boolean
 }
 
+class ActivityViewModel {
+    changeName(name: String)
+    changeDescription(name: String)
+    setRemindDate(date: Date)
+    setRemindTime(time: Time?)
+    pickRepeateFrequency(frequency: Frequency)
+    pickEndOfRepeate(data: Date?)
+
+    save()
+    close()
+    discardCurrentState()
+}
+
 package Profile {
 
     interface PetsRepository {
@@ -31,19 +44,6 @@ package Profile {
         selectGender(gender: Gender)
         pickDateOfBirth(date: Date?)
         pickBreed(breed: Breed?)
-
-        save()
-        close()
-        discardCurrentState()
-    }
-
-    class ActivityViewModel {
-        changeName(name: String)
-        changeDescription(name: String)
-        setRemindDate(date: Date)
-        setRemindTime(time: Time?)
-        pickRepeateFrequency(frequency: Frequency)
-        pickEndOfRepeate(data: Date?)
 
         save()
         close()
