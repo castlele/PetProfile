@@ -1,19 +1,19 @@
 package com.castlelecs.petprofile.repositories
 
-import com.castlelecs.petprofile.mocks.MockDataStore
 import com.castlelecs.petprofile.models.Activity
-import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
-import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
-import com.castlelecs.petprofile.repositories.SaveActivityException
 import com.castlelecs.petprofile.utils.assertSequencesEquals
-import com.castlelecs.utils.datastore.DataStore
-import com.castlelecs.utils.generateUUIDString
+import com.castlelecs.petprofile.utils.createActivitiesDataStore
+import com.castlelecs.petprofile.utils.createMultipleActivities
+import com.castlelecs.petprofile.utils.createMultiplePets
+import com.castlelecs.petprofile.utils.createPetsDataStore
+import com.castlelecs.petprofile.utils.createPetsRepository
+import com.castlelecs.petprofile.utils.createPet
+import com.castlelecs.petprofile.utils.PET_ID
+import com.castlelecs.petprofile.utils.ACTIVITY_ID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 class PetsRepositoryTests {
 
@@ -33,7 +33,10 @@ class PetsRepositoryTests {
     fun petCanBeFoundById() {
         val id = PET_ID
         val savedPet = Pet.EMPTY(id)
-        val sut = createPetsRepository(listOf(savedPet))
+        val sut = createPetsRepository(
+            pets = listOf(savedPet),
+            activities = emptyList(),
+        )
 
         val pet = sut.getPet(id)
 
@@ -43,7 +46,10 @@ class PetsRepositoryTests {
     @Test
     fun allPetsCanBeGet() {
         val expectedPets = createMultiplePets()
-        val sut = createPetsRepository(expectedPets)
+        val sut = createPetsRepository(
+            pets = expectedPets,
+            activities = emptyList(),
+        )
 
         val pets = sut.getAllPets()
 
@@ -242,62 +248,5 @@ class PetsRepositoryTests {
 
         assertEquals(null, deletedActivity)
         assertEquals(null, sut.getActivity(activityId))
-    }
-
-    private fun createPetsRepository(
-        pets: List<Pet> = emptyList(),
-        activities: List<Activity> = emptyList(),
-    ): PetsRepository {
-        return PetsRepositoryImpl(
-            petsDataStore = createPetsDataStore(*pets.toTypedArray()),
-            activitiesDataStore = createActivitiesDataStore(*activities.toTypedArray()),
-        )
-    }
-
-    private fun createPetsRepository(
-        petsDataStore: DataStore<ID, Pet> = createPetsDataStore(*createMultiplePets(0).toTypedArray()),
-        activitiesDataStore: DataStore<ID, Activity> = createActivitiesDataStore(*createMultipleActivities("", 0).toTypedArray()),
-    ): PetsRepository {
-        return PetsRepositoryImpl(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
-    }
-
-    private fun createPetsDataStore(vararg pets: Pet): DataStore<ID, Pet> {
-        val store = MockDataStore<ID, Pet>()
-
-        pets.forEach { pet ->
-            store.set(pet.id, pet)
-        }
-
-        return store
-    }
-
-    private fun createActivitiesDataStore(vararg activities: Activity): DataStore<ID, Activity> {
-        val store = MockDataStore<ID, Activity>()
-
-        activities.forEach { activity ->
-            store.set(activity.id, activity)
-        }
-
-        return store
-    }
-
-    private fun createMultiplePets(amount: Int = 5): List<Pet> {
-        return (0..amount).map { index ->
-            Pet.EMPTY("$index")
-        }
-    }
-
-    private fun createMultipleActivities(petId: String, amount: Int = 5): List<Activity> {
-        return (0..amount).map { index ->
-            Activity.EMPTY(petId, "$index")
-        }
-    }
-
-    companion object {
-        private const val PET_ID = "pet-id"
-        private const val ACTIVITY_ID = "activity-id"
     }
 }

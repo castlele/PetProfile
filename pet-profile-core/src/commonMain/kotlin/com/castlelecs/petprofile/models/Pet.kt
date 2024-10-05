@@ -2,7 +2,7 @@ package com.castlelecs.petprofile.models
 
 data class Pet(
     val id: ID,
-    val name: String,
+    val name: String = "",
     val activities: Set<Activity> = emptySet(),
 ) {
     companion object {

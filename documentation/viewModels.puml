@@ -18,8 +18,10 @@ package Profile {
         petsRepository: PetsRepository
 
         save(pet: Pet)
-        saveActivity(activity: Activity, pet: Pet)
         delete(pet: Pet)
+
+        saveActivity(activity: Activity, pet: Pet)
+        deleteActivity(activity: Activity, pet: Pet)
     }
 
     class PetProfileViewModel {
