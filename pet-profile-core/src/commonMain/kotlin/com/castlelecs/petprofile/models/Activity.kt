@@ -1,10 +1,8 @@
 package com.castlelecs.petprofile.models
 
+import com.castlelecs.petprofile.utils.now
 import com.castlelecs.utils.generateUUIDString
-import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 
 data class Activity(
     val petId: String,
@@ -38,6 +36,3 @@ data class Activity(
     }
 }
 
-private fun LocalDateTime.Companion.now(): LocalDateTime {
-    return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-}
