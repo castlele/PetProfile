@@ -1,18 +1,14 @@
 package com.castlelecs.petprofile.models
 
 import com.castlelecs.petprofile.utils.now
-import com.castlelecs.utils.generateUUIDString
 import kotlinx.datetime.LocalDateTime
 
 data class Activity(
-    val petId: String,
     val id: String,
-    val dateTime: LocalDateTime,
-    val name: String = "",
+    val petId: String,
+    val name: String,
+    val reminder: Reminder,
     val description: String = "",
-    val frequency: Frequency? = null,
-    val endDate: String? = null,
-    val endTime: String? = null,
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -29,9 +25,12 @@ data class Activity(
 
     companion object {
         fun EMPTY(petId: String, id: String) = Activity(
-            petId = petId,
             id = id,
-            dateTime = LocalDateTime.now(),
+            petId = petId,
+            name = "",
+            reminder = Reminder(
+                date = LocalDateTime.now().date,
+            ),
         )
     }
 }
