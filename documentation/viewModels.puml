@@ -1,0 +1,57 @@
+@startuml
+
+class OnboardingViewModel {
+    isFirstTime: Boolean
+    isOnboardingPassed: Boolean
+}
+
+class ActivityViewModel {
+    changeName(name: String)
+    changeDescription(name: String)
+    setRemindDate(date: Date)
+    setRemindTime(time: Time?)
+    pickRepeateFrequency(frequency: Frequency)
+    pickEndOfRepeate(data: Date?)
+
+    save()
+    close()
+    discardCurrentState()
+}
+
+package Profile {
+
+    interface PetsRepository {
+        getPet(id: UUID): Pet
+        getActivity(pet: Pet): Activity
+        saveActivity(pet: Pet, activity: Activity)
+        savePet(pet: Pet)
+    }
+
+    interface PetsInteractor {
+        petsRepository: PetsRepository
+
+        save(pet: Pet)
+        saveActivity(activity: Activity, pet: Pet)
+        delete(pet: Pet)
+    }
+
+    class PetProfileViewModel {
+        petsInteractor: PetsInteractor
+
+        changeFirstName(name: String)
+        changeLastName(name: String)
+        toggleCastration()
+        selectGender(gender: Gender)
+        pickDateOfBirth(date: Date?)
+        pickBreed(breed: Breed?)
+
+        save()
+        close()
+        discardCurrentState()
+    }
+
+    PetProfileViewModel o-- PetsInteractor
+    PetsInteractor o-- PetsRepository
+}
+
+@enduml
