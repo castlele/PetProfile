@@ -9,8 +9,8 @@ data class Pet(
     val id: ID,
     val name: String,
     val lastName: String,
-    val gender: Gender,
-    val dateOfBirth: LocalDate,
+    val gender: Gender?,
+    val dateOfBirth: LocalDate?,
     val breed: Breed,
     val isCastrated: Boolean,
     val activities: Set<Activity> = emptySet(),
@@ -21,9 +21,9 @@ data class Pet(
                 id = id,
                 name = name,
                 lastName = "",
-                gender = Gender.MALE,
-                dateOfBirth = LocalDateTime.now().date,
-                breed = Breed(),
+                gender = null,
+                dateOfBirth = null,
+                breed = Breed.NONE,
                 isCastrated = false,
             )
         }
