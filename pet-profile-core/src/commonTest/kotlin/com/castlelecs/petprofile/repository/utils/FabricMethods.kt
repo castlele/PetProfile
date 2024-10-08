@@ -75,7 +75,7 @@ internal fun createPet(
     id: String = PET_ID,
     name: String = "",
 ): Pet {
-    return Pet(
+    return Pet.EMPTY(
         id = id,
         name = name,
     )
