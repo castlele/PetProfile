@@ -7,6 +7,8 @@ compose-material3 = "1.1.2"
 androidx-activityCompose = "1.8.0"
 androidx-navigationCompose = "2.7.7"
 dateTime = "0.6.0"
+turbineVersion = "1.1.0"
+coroutinesTest = "1.9.0-RC.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -19,6 +21,9 @@ compose-foundation = { module = "androidx.compose.foundation:foundation", versio
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTime" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutinesTest" }
+
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbineVersion" }
 
 
 [plugins]
