@@ -81,7 +81,6 @@ class PetsProfileViewModel(
             breed = state.breed,
             isCastrated = state.isCastrated,
             activities = state.activities,
-
         )
     }
 }
