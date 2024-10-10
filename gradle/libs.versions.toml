@@ -9,6 +9,7 @@ androidx-navigationCompose = "2.7.7"
 dateTime = "0.6.0"
 turbineVersion = "1.1.0"
 coroutinesTest = "1.9.0-RC.2"
+ktfmtVersion = "0.20.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -31,3 +32,5 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+
+ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "ktfmtVersion" }
