@@ -1,5 +1,21 @@
 # PetProfile
 
+## How to work with the project
+
+This project uses [ktfmt](https://github.com/cortinico/ktfmt-gradle) plugin. For code style official kotlin language style is used.
+
+For checking code formatting the following task can be used:
+
+```bash
+./gradle ktfmtCheck
+```
+
+For formatting the following task can be used:
+
+```bash
+./gradle ktfmtFormat
+```
+
 ## Dictionary
 
 1. Pet object:
