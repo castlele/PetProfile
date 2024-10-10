@@ -8,7 +8,8 @@ abstract class SingleStateViewModel<State> : ViewModel() {
 
     protected abstract val mutableStateFlow: MutableStateFlow<State>
 
-    val stateFlow: StateFlow<State> get() = mutableStateFlow
+    val stateFlow: StateFlow<State>
+        get() = mutableStateFlow
 
     var state: State
         get() = stateFlow.value
@@ -16,4 +17,3 @@ abstract class SingleStateViewModel<State> : ViewModel() {
             mutableStateFlow.value = value
         }
 }
-

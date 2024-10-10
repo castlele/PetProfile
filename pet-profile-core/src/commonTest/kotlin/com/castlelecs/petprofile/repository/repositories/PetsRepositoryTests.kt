@@ -2,15 +2,14 @@ package com.castlelecs.petprofile.repositories
 
 import com.castlelecs.petprofile.models.Activity
 import com.castlelecs.petprofile.models.Pet
+import com.castlelecs.petprofile.utils.ACTIVITY_ID
+import com.castlelecs.petprofile.utils.PET_ID
 import com.castlelecs.petprofile.utils.assertSequencesEquals
 import com.castlelecs.petprofile.utils.createActivitiesDataStore
 import com.castlelecs.petprofile.utils.createMultipleActivities
 import com.castlelecs.petprofile.utils.createMultiplePets
 import com.castlelecs.petprofile.utils.createPetsDataStore
 import com.castlelecs.petprofile.utils.createPetsRepository
-import com.castlelecs.petprofile.utils.createPet
-import com.castlelecs.petprofile.utils.PET_ID
-import com.castlelecs.petprofile.utils.ACTIVITY_ID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -33,10 +32,11 @@ class PetsRepositoryTests {
     fun petCanBeFoundById() {
         val id = PET_ID
         val savedPet = Pet.EMPTY(id)
-        val sut = createPetsRepository(
-            pets = listOf(savedPet),
-            activities = emptyList(),
-        )
+        val sut =
+            createPetsRepository(
+                pets = listOf(savedPet),
+                activities = emptyList(),
+            )
 
         val pet = sut.getPet(id)
 
@@ -46,10 +46,8 @@ class PetsRepositoryTests {
     @Test
     fun allPetsCanBeGet() {
         val expectedPets = createMultiplePets()
-        val sut = createPetsRepository(
-            pets = expectedPets,
-            activities = emptyList(),
-        )
+        val sut =
+            createPetsRepository(pets = expectedPets, activities = emptyList())
 
         val pets = sut.getAllPets()
 
@@ -102,10 +100,11 @@ class PetsRepositoryTests {
         val activity = Activity.EMPTY(petId, activityId)
         val petsDataStore = createPetsDataStore(pet)
         val activitiesDataStore = createActivitiesDataStore()
-        val sut = createPetsRepository(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
+        val sut =
+            createPetsRepository(
+                petsDataStore = petsDataStore,
+                activitiesDataStore = activitiesDataStore,
+            )
 
         sut.saveActivity(activity, pet)
 
@@ -119,9 +118,8 @@ class PetsRepositoryTests {
         val pet = Pet.EMPTY(petId)
         val activity = Activity.EMPTY(petId, activityId)
         val activitiesDataStore = createActivitiesDataStore()
-        val sut = createPetsRepository(
-            activitiesDataStore = activitiesDataStore,
-        )
+        val sut =
+            createPetsRepository(activitiesDataStore = activitiesDataStore)
 
         assertFailsWith(
             SaveActivityException.NoSavedPet::class,
@@ -137,10 +135,11 @@ class PetsRepositoryTests {
         val activity = Activity.EMPTY(activityId, activityId)
         val petsDataStore = createPetsDataStore(pet)
         val activitiesDataStore = createActivitiesDataStore()
-        val sut = createPetsRepository(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
+        val sut =
+            createPetsRepository(
+                petsDataStore = petsDataStore,
+                activitiesDataStore = activitiesDataStore,
+            )
 
         assertFailsWith(
             SaveActivityException.DifferentPetId::class,
@@ -154,10 +153,11 @@ class PetsRepositoryTests {
         val activityId = ACTIVITY_ID
         val pet = Pet.EMPTY(petId)
         val expectedActivities = Activity.EMPTY(petId, activityId)
-        val sut = createPetsRepository(
-            pets = listOf(pet),
-            activities = listOf(expectedActivities),
-        )
+        val sut =
+            createPetsRepository(
+                pets = listOf(pet),
+                activities = listOf(expectedActivities),
+            )
 
         val activity = sut.getActivity(activityId)
 
@@ -169,10 +169,8 @@ class PetsRepositoryTests {
         val pets = createMultiplePets()
         val pet = pets[0]
         val expectedActivities = createMultipleActivities(pet.id)
-        val sut = createPetsRepository(
-            pets = pets,
-            activities = expectedActivities,
-        )
+        val sut =
+            createPetsRepository(pets = pets, activities = expectedActivities)
 
         val activities = sut.getActivities(pet)
 
@@ -183,10 +181,8 @@ class PetsRepositoryTests {
     fun allActivitiesCanBeGet() {
         val pets = createMultiplePets()
         val expectedActivities = createMultipleActivities(pets[0].id)
-        val sut = createPetsRepository(
-            pets = pets,
-            activities = expectedActivities,
-        )
+        val sut =
+            createPetsRepository(pets = pets, activities = expectedActivities)
 
         val activities = sut.getAllActivities()
 
@@ -200,10 +196,11 @@ class PetsRepositoryTests {
         val pet = Pet.EMPTY(petId)
         val petsDataStore = createPetsDataStore(pet)
         val activitiesDataStore = createActivitiesDataStore()
-        val sut = createPetsRepository(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
+        val sut =
+            createPetsRepository(
+                petsDataStore = petsDataStore,
+                activitiesDataStore = activitiesDataStore,
+            )
 
         val deletedActivity = sut.removeActivity(activityId)
 
@@ -219,10 +216,11 @@ class PetsRepositoryTests {
         val activity = Activity.EMPTY(petId, activityId)
         val petsDataStore = createPetsDataStore(pet)
         val activitiesDataStore = createActivitiesDataStore(activity)
-        val sut = createPetsRepository(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
+        val sut =
+            createPetsRepository(
+                petsDataStore = petsDataStore,
+                activitiesDataStore = activitiesDataStore,
+            )
 
         val deletedActivity = sut.removeActivity(activityId)
 
@@ -236,13 +234,15 @@ class PetsRepositoryTests {
         val activityId = ACTIVITY_ID
         val pet = Pet.EMPTY(petId)
         val petsDataStore = createPetsDataStore(pet)
-        val activitiesDataStore = createActivitiesDataStore(
-            *createMultipleActivities(petId).toTypedArray(),
-        )
-        val sut = createPetsRepository(
-            petsDataStore = petsDataStore,
-            activitiesDataStore = activitiesDataStore,
-        )
+        val activitiesDataStore =
+            createActivitiesDataStore(
+                *createMultipleActivities(petId).toTypedArray()
+            )
+        val sut =
+            createPetsRepository(
+                petsDataStore = petsDataStore,
+                activitiesDataStore = activitiesDataStore,
+            )
 
         val deletedActivity = sut.removeActivity(activityId)
 

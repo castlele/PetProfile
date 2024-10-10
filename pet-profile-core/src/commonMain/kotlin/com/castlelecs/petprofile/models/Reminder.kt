@@ -9,4 +9,3 @@ data class Reminder(
     val repeateInfo: Frequency = Frequency.Never(),
     val endDate: EndRepeate = EndRepeate.Never(),
 )
-

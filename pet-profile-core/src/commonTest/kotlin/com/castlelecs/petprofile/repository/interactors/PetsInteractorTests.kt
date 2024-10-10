@@ -1,23 +1,15 @@
 package com.castlelecs.petprofile.interactors
 
-import com.castlelecs.petprofile.models.ID
-import com.castlelecs.petprofile.models.Pet
-import com.castlelecs.petprofile.repositories.PetsRepository
-import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
-import com.castlelecs.petprofile.mocks.MockDataStore
-import com.castlelecs.utils.datastore.DataStore
-import com.castlelecs.utils.generateUUIDString
-import com.castlelecs.petprofile.utils.createPet
-import com.castlelecs.petprofile.utils.createPetsRepository
-import com.castlelecs.petprofile.utils.createPetsInteractor
-import com.castlelecs.petprofile.utils.createMultiplePets
-import com.castlelecs.petprofile.utils.createMultipleActivities
 import com.castlelecs.petprofile.utils.createActivity
+import com.castlelecs.petprofile.utils.createMultipleActivities
+import com.castlelecs.petprofile.utils.createPet
+import com.castlelecs.petprofile.utils.createPetsInteractor
+import com.castlelecs.petprofile.utils.createPetsRepository
+import kotlin.collections.emptyList
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import kotlin.collections.emptyList
 
 class PetsInteractorTests {
 
@@ -57,10 +49,8 @@ class PetsInteractorTests {
     @Test
     fun deletionOfThePetRemovesItFromDataStore() {
         val pet = createPet()
-        val repository = createPetsRepository(
-            pets = listOf(pet),
-            activities = emptyList(),
-        )
+        val repository =
+            createPetsRepository(pets = listOf(pet), activities = emptyList())
         val sut = createPetsInteractor(repository)
 
         val isDeleted = sut.delete(pet)
@@ -104,7 +94,10 @@ class PetsInteractorTests {
 
         sut.saveActivity(updatedActivity, pet)
 
-        assertEquals(updatedActivity, repository.getActivity(updatedActivity.id))
+        assertEquals(
+            updatedActivity,
+            repository.getActivity(updatedActivity.id),
+        )
         assertEquals(1, repository.getAllActivities().count())
     }
 
@@ -132,4 +125,3 @@ class PetsInteractorTests {
         assertTrue(isDeleted)
     }
 }
-

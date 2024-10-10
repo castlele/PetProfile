@@ -7,9 +7,7 @@ class MockDataStore<Key, Value> : DataStore<Key, Value> {
     private val storage = mutableMapOf<Key, Value>()
 
     constructor(initialValue: Map<Key, Value> = emptyMap()) {
-        initialValue.forEach { key, value ->
-            storage[key] = value
-        }
+        initialValue.forEach { key, value -> storage[key] = value }
     }
 
     override fun get(key: Key): Value? {

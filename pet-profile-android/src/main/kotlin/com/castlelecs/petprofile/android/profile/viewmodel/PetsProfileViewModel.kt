@@ -10,9 +10,8 @@ import com.castlelecs.utils.generateUUIDString
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 
-class PetsProfileViewModel(
-    private val petsInteractor: PetsInteractor,
-) : SingleStateViewModel<PetsProfileViewModel.State>() {
+class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
+    SingleStateViewModel<PetsProfileViewModel.State>() {
 
     data class State(
         val name: String = "",
@@ -27,39 +26,27 @@ class PetsProfileViewModel(
     override val mutableStateFlow = MutableStateFlow(State())
 
     fun changeFirstName(name: String) {
-        state = state.copy(
-            name = name,
-        )
+        state = state.copy(name = name)
     }
 
     fun changeLastName(lastName: String) {
-        state = state.copy(
-            lastName = lastName,
-        )
+        state = state.copy(lastName = lastName)
     }
 
     fun toggleCastration() {
-        state = state.copy(
-            isCastrated = state.isCastrated.not(),
-        )
+        state = state.copy(isCastrated = state.isCastrated.not())
     }
 
     fun changeGender(gender: Gender?) {
-        state = state.copy(
-            gender = gender,
-        )
+        state = state.copy(gender = gender)
     }
 
     fun pickDateOfBirth(date: String?) {
-        state = state.copy(
-            dateOfBirth = date,
-        )
+        state = state.copy(dateOfBirth = date)
     }
 
     fun pickBreed(breed: Breed) {
-        state = state.copy(
-            breed = breed,
-        )
+        state = state.copy(breed = breed)
     }
 
     fun save() {

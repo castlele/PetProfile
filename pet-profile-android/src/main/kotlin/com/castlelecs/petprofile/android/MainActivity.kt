@@ -11,12 +11,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-            MyApplicationTheme {
-                Surface {
-                    Text("Hello")
-                }
-            }
-        }
+        setContent { MyApplicationTheme { Surface { Text("Hello") } } }
     }
 }

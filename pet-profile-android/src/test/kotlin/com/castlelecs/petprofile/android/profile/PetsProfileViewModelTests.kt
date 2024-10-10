@@ -8,7 +8,6 @@ import com.castlelecs.petprofile.models.Breed
 import com.castlelecs.petprofile.models.Gender
 import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
-import com.castlelecs.petprofile.repositories.PetsRepository
 import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
 import com.castlelecs.utils.datastore.DataStore
 import kotlin.test.Test
@@ -20,20 +19,19 @@ class PetsProfileViewModelTests {
 
     @Test
     fun assertDefaultState() = runTest {
-        val expectedState = PetsProfileViewModel.State(
-            name = "",
-            lastName = "",
-            gender = null,
-            dateOfBirth = null,
-            breed = Breed.NONE,
-            isCastrated = false,
-            activities = emptySet(),
-        )
+        val expectedState =
+            PetsProfileViewModel.State(
+                name = "",
+                lastName = "",
+                gender = null,
+                dateOfBirth = null,
+                breed = Breed.NONE,
+                isCastrated = false,
+                activities = emptySet(),
+            )
         val sut = createViewModel()
 
-        sut.stateFlow.test {
-            assertEquals(expectedState, awaitItem())
-        }
+        sut.stateFlow.test { assertEquals(expectedState, awaitItem()) }
     }
 
     @Test
@@ -43,9 +41,7 @@ class PetsProfileViewModelTests {
 
         sut.changeFirstName(name)
 
-        sut.stateFlow.test {
-            assertEquals(name, awaitItem().name)
-        }
+        sut.stateFlow.test { assertEquals(name, awaitItem().name) }
     }
 
     @Test
@@ -55,9 +51,7 @@ class PetsProfileViewModelTests {
 
         sut.changeLastName(lastName)
 
-        sut.stateFlow.test {
-            assertEquals(lastName, awaitItem().lastName)
-        }
+        sut.stateFlow.test { assertEquals(lastName, awaitItem().lastName) }
     }
 
     @Test
@@ -66,9 +60,7 @@ class PetsProfileViewModelTests {
 
         sut.toggleCastration()
 
-        sut.stateFlow.test {
-            assertEquals(true, awaitItem().isCastrated)
-        }
+        sut.stateFlow.test { assertEquals(true, awaitItem().isCastrated) }
     }
 
     @Test
@@ -78,9 +70,7 @@ class PetsProfileViewModelTests {
 
         sut.changeGender(updatedGender)
 
-        sut.stateFlow.test {
-            assertEquals(updatedGender, awaitItem().gender)
-        }
+        sut.stateFlow.test { assertEquals(updatedGender, awaitItem().gender) }
     }
 
     @Test
@@ -102,9 +92,7 @@ class PetsProfileViewModelTests {
 
         sut.pickBreed(breed)
 
-        sut.stateFlow.test {
-            assertEquals(breed, awaitItem().breed)
-        }
+        sut.stateFlow.test { assertEquals(breed, awaitItem().breed) }
     }
 
     @Test
@@ -114,23 +102,22 @@ class PetsProfileViewModelTests {
 
         sut.discardCurrentState()
 
-        sut.stateFlow.test {
-            assertEquals(expectedState, awaitItem())
-        }
+        sut.stateFlow.test { assertEquals(expectedState, awaitItem()) }
     }
 
     @Test
     fun savingCreatesPetInDataStore() = runTest {
-        val expectedPet = Pet(
-            id = PET_ID,
-            name = PET_NAME,
-            lastName = PET_LAST_NAME,
-            gender = PET_GENDER,
-            dateOfBirth = LocalDate.parse(PET_DATE_OF_BIRTH),
-            breed = PET_BREED,
-            isCastrated = true,
-            activities = emptySet(),
-        )
+        val expectedPet =
+            Pet(
+                id = PET_ID,
+                name = PET_NAME,
+                lastName = PET_LAST_NAME,
+                gender = PET_GENDER,
+                dateOfBirth = LocalDate.parse(PET_DATE_OF_BIRTH),
+                breed = PET_BREED,
+                isCastrated = true,
+                activities = emptySet(),
+            )
         val petsDataStore = MockDataStore<ID, Pet>()
         val sut = createViewModel(petsDataStore).also(::setAllFields)
 
@@ -146,15 +133,17 @@ class PetsProfileViewModelTests {
     }
 
     private fun createViewModel(
-        petsDataStore: DataStore<ID, Pet> = MockDataStore(),
+        petsDataStore: DataStore<ID, Pet> = MockDataStore()
     ): PetsProfileViewModel {
         return PetsProfileViewModel(
-            petsInteractor = PetsInteractorImpl(
-                petsRepository = PetsRepositoryImpl(
-                    petsDataStore = petsDataStore,
-                    activitiesDataStore = MockDataStore(),
-                ),
-            ),
+            petsInteractor =
+                PetsInteractorImpl(
+                    petsRepository =
+                        PetsRepositoryImpl(
+                            petsDataStore = petsDataStore,
+                            activitiesDataStore = MockDataStore(),
+                        )
+                )
         )
     }
 
@@ -175,7 +164,6 @@ class PetsProfileViewModelTests {
         assertEquals(expected.breed, other.breed)
         assertEquals(expected.isCastrated, other.isCastrated)
         assertEquals(expected.activities, other.activities)
-
     }
 
     companion object {
