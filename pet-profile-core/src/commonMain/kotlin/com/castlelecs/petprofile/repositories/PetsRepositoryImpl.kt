@@ -36,7 +36,7 @@ class PetsRepositoryImpl(
             throw SaveActivityException.DifferentPetId(
                 petId = pet.id,
                 expectedPetId = activity.petId,
-                activityId = activity.id
+                activityId = activity.id,
             )
         }
 
@@ -52,8 +52,7 @@ class PetsRepositoryImpl(
     }
 
     override fun getActivities(pet: Pet): List<Activity> {
-        return getAllActivities()
-            .filter { it.petId == pet.id }
+        return getAllActivities().filter { it.petId == pet.id }
     }
 
     override fun removeActivity(id: ID): Activity? {
