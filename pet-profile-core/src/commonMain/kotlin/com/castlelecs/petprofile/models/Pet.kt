@@ -1,9 +1,6 @@
 package com.castlelecs.petprofile.models
 
-import com.castlelecs.petprofile.utils.now
-import com.castlelecs.petprofile.models.Breed
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 
 data class Pet(
     val id: ID,

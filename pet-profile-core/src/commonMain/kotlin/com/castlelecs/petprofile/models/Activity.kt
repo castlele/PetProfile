@@ -24,14 +24,12 @@ data class Activity(
     }
 
     companion object {
-        fun EMPTY(petId: String, id: String) = Activity(
-            id = id,
-            petId = petId,
-            name = "",
-            reminder = Reminder(
-                date = LocalDateTime.now().date,
-            ),
-        )
+        fun EMPTY(petId: String, id: String) =
+            Activity(
+                id = id,
+                petId = petId,
+                name = "",
+                reminder = Reminder(date = LocalDateTime.now().date),
+            )
     }
 }
-

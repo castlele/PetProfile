@@ -1,12 +1,10 @@
 package com.castlelecs.utils.logger
 
-fun compositeLogger(system: String): Logger = CompositeLogger(
-    system = system,
-    loggers = listOf(
-        printLogger(),
-        consoleLogger(system),
-    ),
-)
+fun compositeLogger(system: String): Logger =
+    CompositeLogger(
+        system = system,
+        loggers = listOf(printLogger(), consoleLogger(system)),
+    )
 
 private class CompositeLogger(
     private val system: String,

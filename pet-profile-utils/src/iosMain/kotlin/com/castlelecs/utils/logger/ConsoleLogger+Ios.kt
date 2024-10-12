@@ -16,7 +16,7 @@ actual fun consoleLogger(system: String): Logger = ConsoleLogger(system)
 @OptIn(ExperimentalForeignApi::class)
 private class ConsoleLogger(
     private val system: String,
-    private val logT: os_log_t = OS_LOG_DEFAULT
+    private val logT: os_log_t = OS_LOG_DEFAULT,
 ) : Logger {
 
     override fun log(level: LogLevel, message: String) {
@@ -29,10 +29,11 @@ private class ConsoleLogger(
         )
     }
 
-    private fun LogLevel.toOSLogLevel(): UByte = when (this) {
-        LogLevel.DEBUG -> OS_LOG_TYPE_DEBUG
-        LogLevel.INFO -> OS_LOG_TYPE_INFO
-        LogLevel.WARN -> OS_LOG_TYPE_DEFAULT
-        LogLevel.ERROR -> OS_LOG_TYPE_ERROR
-    }
+    private fun LogLevel.toOSLogLevel(): UByte =
+        when (this) {
+            LogLevel.DEBUG -> OS_LOG_TYPE_DEBUG
+            LogLevel.INFO -> OS_LOG_TYPE_INFO
+            LogLevel.WARN -> OS_LOG_TYPE_DEFAULT
+            LogLevel.ERROR -> OS_LOG_TYPE_ERROR
+        }
 }
