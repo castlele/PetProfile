@@ -13,9 +13,6 @@ fun App(
     modifier: Modifier = Modifier,
 ) {
     Surface(modifier = modifier) {
-        Profile(
-            vm = petsProfileViewModel,
-            modifier = Modifier.fillMaxSize()
-        )
+        Profile(vm = petsProfileViewModel, modifier = Modifier.fillMaxSize())
     }
 }

@@ -1,15 +1,15 @@
 package com.castlelecs.petprofile.android.profile.view
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.foundation.layout.Column
 import com.castlelecs.petprofile.android.profile.viewmodel.PetsProfileViewModel
 import com.castlelecs.petprofile.models.Breed
 import com.castlelecs.petprofile.models.Gender
-import com.castlelecs.petprofile.models.Pet
 
 @Composable
 fun Profile(vm: PetsProfileViewModel, modifier: Modifier = Modifier) {
@@ -55,6 +55,8 @@ fun Profile(
     Column(modifier = modifier) {
         Text("Name: $name")
         Text("Last name: $lastName")
+
+        Button(onClick = save) { Text("Save Pet") }
     }
 }
 

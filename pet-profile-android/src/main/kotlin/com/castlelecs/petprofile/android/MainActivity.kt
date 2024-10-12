@@ -11,20 +11,17 @@ import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
 
 class MainActivity : ComponentActivity() {
 
-    private val petsRepository = PetsRepositoryImpl(
-        petsDataStore = PetsDataStore(),
-        activitiesDataStore = ActivitiesDataStore(),
-    )
+    private val petsRepository =
+        PetsRepositoryImpl(
+            petsDataStore = PetsDataStore(),
+            activitiesDataStore = ActivitiesDataStore(),
+        )
     private val petsInteractor = PetsInteractorImpl(petsRepository)
     private val petsProfileViewModel = PetsProfileViewModel(petsInteractor)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent {
-            MyApplicationTheme {
-                App(petsProfileViewModel)
-            }
-        }
+        setContent { MyApplicationTheme { App(petsProfileViewModel) } }
     }
 }
