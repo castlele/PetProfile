@@ -1,13 +1,19 @@
 package com.castlelecs.petprofile.android.profile.view
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.castlelecs.petprofile.android.R
 import com.castlelecs.petprofile.android.profile.viewmodel.PetsProfileViewModel
+import com.castlelecs.petprofile.android.ui.forms.FormTextField
 import com.castlelecs.petprofile.models.Breed
 import com.castlelecs.petprofile.models.Gender
 
@@ -17,7 +23,7 @@ fun Profile(vm: PetsProfileViewModel, modifier: Modifier = Modifier) {
 
     Profile(
         name = state.name,
-        lastName = state.name,
+        lastName = state.lastName,
         gender = state.gender,
         dateOfBirth = state.dateOfBirth,
         breed = state.breed,
@@ -52,11 +58,29 @@ fun Profile(
     discardCurrentState: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
-        Text("Name: $name")
-        Text("Last name: $lastName")
+    Box(modifier = modifier) {
+        Column(
+            verticalArrangement =
+                Arrangement.spacedBy(dimensionResource(R.dimen.small_dp)),
+            modifier =
+                Modifier.padding(
+                    horizontal = dimensionResource(R.dimen.default_dp)
+                ),
+        ) {
+            FormTextField(
+                text = name,
+                onTextChange = changeFirstName,
+                label = stringResource(R.string.pets_name),
+                modifier = Modifier.fillMaxWidth(),
+            )
 
-        Button(onClick = save) { Text("Save Pet") }
+            FormTextField(
+                text = lastName,
+                onTextChange = changeLastName,
+                label = stringResource(R.string.pets_last_name),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
     }
 }
 
