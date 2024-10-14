@@ -7,6 +7,9 @@ import com.castlelecs.petprofile.models.Breed
 import com.castlelecs.petprofile.models.Gender
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.utils.generateUUIDString
+import com.castlelecs.utils.logger.compositeLogger
+import com.castlelecs.utils.logger.error
+import com.castlelecs.utils.logger.info
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 
@@ -22,6 +25,8 @@ class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
         val isCastrated: Boolean = false,
         val activities: Set<Activity> = emptySet(),
     )
+
+    private val logger = compositeLogger("PetsProfileViewModel")
 
     override val mutableStateFlow = MutableStateFlow(State())
 
@@ -51,6 +56,9 @@ class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
 
     fun save() {
         val pet = createPet()
+
+        logger.info(petCreatedInfoMessage(pet))
+
         petsInteractor.save(pet)
     }
 
@@ -64,10 +72,26 @@ class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
             name = state.name,
             lastName = state.lastName,
             gender = state.gender,
-            dateOfBirth = LocalDate.parse(state.dateOfBirth ?: "") ?: null,
+            dateOfBirth = state.dateOfBirth?.toDate(),
             breed = state.breed,
             isCastrated = state.isCastrated,
             activities = state.activities,
         )
+    }
+
+    private fun String.toDate(): LocalDate? {
+        return try {
+            LocalDate.parse(this)
+        } catch (_: Exception) {
+            logger.error(dateParsingErrorMessage(this))
+            null
+        }
+    }
+
+    companion object {
+        private fun dateParsingErrorMessage(date: String) =
+            "Can't parse date from string: {$date}"
+
+        private fun petCreatedInfoMessage(pet: Pet) = "Pet was created: {$pet}"
     }
 }

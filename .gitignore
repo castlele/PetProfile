@@ -16,3 +16,6 @@ build
 
 # Java
 java_pid*
+
+# Logs
+logs.txt
