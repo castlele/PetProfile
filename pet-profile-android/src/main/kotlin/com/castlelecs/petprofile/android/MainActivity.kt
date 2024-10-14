@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import com.castlelecs.petprofile.android.profile.datastores.ActivitiesDataStore
 import com.castlelecs.petprofile.android.profile.datastores.PetsDataStore
 import com.castlelecs.petprofile.android.profile.viewmodel.PetsProfileViewModel
+import com.castlelecs.petprofile.android.ui.theme.AppTheme
 import com.castlelecs.petprofile.interactors.PetsInteractorImpl
 import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
 
@@ -22,6 +23,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContent { MyApplicationTheme { App(petsProfileViewModel) } }
+        setContent { AppTheme { App(petsProfileViewModel) } }
     }
 }
