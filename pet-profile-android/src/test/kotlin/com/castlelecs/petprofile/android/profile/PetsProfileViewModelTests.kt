@@ -10,6 +10,7 @@ import com.castlelecs.petprofile.models.ID
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.petprofile.repositories.PetsRepositoryImpl
 import com.castlelecs.utils.datastore.DataStore
+import com.castlelecs.utils.logger.printLogger
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
@@ -143,7 +144,8 @@ class PetsProfileViewModelTests {
                             petsDataStore = petsDataStore,
                             activitiesDataStore = MockDataStore(),
                         )
-                )
+                ),
+            logger = printLogger(),
         )
     }
 
