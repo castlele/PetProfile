@@ -7,14 +7,17 @@ import com.castlelecs.petprofile.models.Breed
 import com.castlelecs.petprofile.models.Gender
 import com.castlelecs.petprofile.models.Pet
 import com.castlelecs.utils.generateUUIDString
+import com.castlelecs.utils.logger.Logger
 import com.castlelecs.utils.logger.compositeLogger
 import com.castlelecs.utils.logger.error
 import com.castlelecs.utils.logger.info
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 
-class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
-    SingleStateViewModel<PetsProfileViewModel.State>() {
+class PetsProfileViewModel(
+    private val petsInteractor: PetsInteractor,
+    private val logger: Logger = compositeLogger("PetsProfileViewModel"),
+) : SingleStateViewModel<PetsProfileViewModel.State>() {
 
     data class State(
         val name: String = "",
@@ -25,8 +28,6 @@ class PetsProfileViewModel(private val petsInteractor: PetsInteractor) :
         val isCastrated: Boolean = false,
         val activities: Set<Activity> = emptySet(),
     )
-
-    private val logger = compositeLogger("PetsProfileViewModel")
 
     override val mutableStateFlow = MutableStateFlow(State())
 
